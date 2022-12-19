@@ -6,9 +6,8 @@ public class CameraFlow : MonoBehaviour
 {
     public GameObject target;
 
-    // public Transform target;
     Vector3 offset;
-    // Use this for initialization
+
     void Start()
     {
         offset = this.transform.position - target.transform.position;
@@ -32,24 +31,13 @@ public class CameraFlow : MonoBehaviour
         }
         offset = offset.normalized * dis;
     }
-    //左右上下移动
+    //左右移动
     private void Rotate()
     {
         if (Input.GetMouseButton(1))
         {
             Vector3 pos = this.transform.position;
-            Vector3 rot = this.transform.eulerAngles;
-
             this.transform.RotateAround(target.transform.position, Vector3.up, Input.GetAxis("Mouse X") * 10);
-            float x = this.transform.eulerAngles.x;
-            float y = this.transform.eulerAngles.y;
-
-            // // //控制移动范围
-            // if (y > 60 && y < 300)
-            // {
-            //     this.transform.position = pos;
-            //     this.transform.eulerAngles = rot;
-            // }
             //  更新相对差值
             offset = this.transform.position - target.transform.position;
         }

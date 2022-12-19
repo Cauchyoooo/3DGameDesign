@@ -6,7 +6,7 @@ public class EnemyFollowAction : SSAction
 {
     private float speed = 2f;                  //跟随玩家的速度
     private GameObject player;                 //玩家
-    private EnemyData enemyData;             //侦查兵数据
+    private EnemyData enemyData;               //巡逻兵数据
 
     private EnemyFollowAction() { }
     public static EnemyFollowAction GetSSAction(GameObject player)
@@ -20,7 +20,7 @@ public class EnemyFollowAction : SSAction
     {
         transform.position = Vector3.MoveTowards(this.transform.position, player.transform.position, speed * Time.deltaTime);
         this.transform.LookAt(player.transform.position);
-        //如果侦察兵没有跟随对象，或者需要跟随的玩家不在侦查兵的区域内
+        //如果巡逻兵没有跟随对象，或者需要跟随的玩家不在巡逻兵的区域内
         if (!enemyData.isFollow || enemyData.CurID != enemyData.AreaID)
         {
             this.destroy = true;

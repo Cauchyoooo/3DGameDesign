@@ -6,9 +6,9 @@ using UnityEngine.SceneManagement;
 public class FirstSceneController : MonoBehaviour, IUserAction, ISceneController
 {
     public PropFactory factory;                              // Enemy和Baby工厂
-    public ScoreController scoreController;                         // 记分员
-    public EnemyActionManager manager;                      // 运动管理器
-    public myUserGUI userGUI;
+    public ScoreController scoreController;                  // 记分员
+    public EnemyActionManager manager;                       // 运动管理器
+    public myUserGUI userGUI;                                // 用户界面
     public int CurID = -1;                                   // 当前玩家所于检测区域的序号
     public GameObject player;                                // 玩家
     public Camera cam;                                       // 主相机
@@ -24,7 +24,7 @@ public class FirstSceneController : MonoBehaviour, IUserAction, ISceneController
         {
             enemies[i].gameObject.GetComponent<EnemyData>().CurID = CurID;
         }
-        //金矿收集完毕
+        // Baby收集完毕
         if(scoreController.getBabyNum() == 0)
         {
             GameOver();
@@ -41,8 +41,6 @@ public class FirstSceneController : MonoBehaviour, IUserAction, ISceneController
         userGUI = gameObject.AddComponent<myUserGUI>() as myUserGUI;
         LoadResource();
         cam.GetComponent<CameraFlow>().target = player;
-        // scoreController = Singleton<ScoreController>.Instance;
-        // userGUI = gameObject.AddComponent<myUserGUI>() as myUserGUI;
         
     }
 
@@ -53,19 +51,15 @@ public class FirstSceneController : MonoBehaviour, IUserAction, ISceneController
         babies = factory.getBabies();
         enemies = factory.getEnemies();
 
-        //所有侦察兵移动
+        // 所有巡逻兵移动
         for (int i = 0; i < enemies.Count; i++)
         {
             manager.Walk(enemies[i]);
         }
     }
 
-    // public void cleanRig(){
-    //     Rigidbody rig = player.GetComponent<Rigidbody>();
-    //     rig.
-    // }
 
-    //玩家移动
+    // 玩家移动
     public void movePlayer(float tranX, float tranZ, bool isShift)
     {
         if(!isGameOver)
@@ -87,11 +81,11 @@ public class FirstSceneController : MonoBehaviour, IUserAction, ISceneController
                 player.GetComponent<Animator>().SetBool("isWalk", false);
                 return;
             }
-            //移动和旋转
+            // 移动和旋转
             player.transform.Translate(0, 0, tranZ * moveSpeed * Time.deltaTime);
             player.transform.Rotate(0, tranX * rotateSpeed * Time.deltaTime, 0);
 
-            //防止碰撞带来的移动
+            // 防止碰撞带来的移动
             if (player.transform.localEulerAngles.x != 0 || player.transform.localEulerAngles.z != 0)
             {
                 player.transform.localEulerAngles = new Vector3(0, player.transform.localEulerAngles.y, 0);

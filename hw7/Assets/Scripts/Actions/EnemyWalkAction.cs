@@ -4,18 +4,14 @@ using UnityEngine;
 
 public class EnemyWalkAction : SSAction
 {
-    private int kind = 4;
+    private int kind = 4;                           //  多边形边数
     // 运动范围为(areaDown,areaUp),(areaLeft,areaRight)
     private float areaLeft = 0;
     private float areaUp = 0;
     private float areaRight = 0;
     private float areaDown = 0;
-    // private enum Dirction { EAST, NORTH, WEST, SOUTH };
-    private float x, z;                             //  初始x和z方向坐标
-    // private float moveDis;                          //  移动矩形边长
     private float moveSpeed = 1.8f;                 //  移动速度
     private bool isReach = true;                    //  是否到达目的地
-    // private Dirction dirction = Dirction.NORTH;     //  移动方向
     private EnemyData enemyData;                    //  Enemy数据
     private List<Vector3> path = new List<Vector3>();   //存储路径点
     private int curTar = 0;     //  当前目标地索引
@@ -27,15 +23,11 @@ public class EnemyWalkAction : SSAction
     {
         EnemyWalkAction action = CreateInstance<EnemyWalkAction>();
         action.kind = k;
-        action.x = start.x;
-        action.z = start.z;
         action.areaLeft = lu.x;
         action.areaRight = rd.x;
         action.areaUp = lu.z;
         action.areaDown = rd.z;
         action.initPath();
-        // //设定移动矩形的边长
-        // action.moveDis = Random.Range(5, 9);
         
         return action;
     }
@@ -98,9 +90,9 @@ public class EnemyWalkAction : SSAction
 
     public override void Update()
     {
-        //侦察移动
+        //巡逻移动
         goPatrol();
-        //如果侦察兵需要跟随玩家并且玩家就在侦察兵所在的区域，侦查动作结束
+        //如果巡逻兵需要跟随玩家并且玩家就在巡逻兵所在的区域，巡逻动作停止
         if (enemyData.isFollow && enemyData.CurID == enemyData.AreaID)
         {
             this.destroy = true;

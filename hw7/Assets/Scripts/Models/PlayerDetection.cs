@@ -6,7 +6,7 @@ public class PlayerDetection : MonoBehaviour
 {
     void OnCollisionEnter(Collision other)
     {
-        //当玩家与侦察兵相撞
+        //当玩家与巡逻兵相撞
         if (other.gameObject.tag == "Player")
         {
             //玩家死亡
